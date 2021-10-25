@@ -1,0 +1,180 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://Scripts/Card.gd" type="Script" id=1]
+[ext_resource path="res://Assets/Card/default/front/border.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Card/default/front/back.jpg" type="Texture" id=3]
+[ext_resource path="res://Assets/Card/default/front/justice.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Card/default/back/1.png" type="Texture" id=5]
+[ext_resource path="res://Assets/Card/default/back/2.png" type="Texture" id=6]
+[ext_resource path="res://Assets/Card/default/cardPosition.png" type="Texture" id=7]
+[ext_resource path="res://Assets/Font/MorrisRomanBlack.otf" type="DynamicFontData" id=8]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 277.666, 393.739 )
+
+[sub_resource type="DynamicFont" id=5]
+size = 32
+use_filter = true
+extra_spacing_char = 2
+font_data = ExtResource( 8 )
+
+[sub_resource type="Animation" id=2]
+resource_name = "selected"
+length = 0.8
+tracks/0/type = "bezier"
+tracks/0/path = NodePath("Back:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0, -81.9626, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.7 )
+}
+tracks/1/type = "bezier"
+tracks/1/path = NodePath("Back:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0, -288.651, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.7 )
+}
+tracks/2/type = "bezier"
+tracks/2/path = NodePath("Back:rotation_degrees")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0, -15, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.7 )
+}
+tracks/3/type = "method"
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0.7 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "button_show"
+} ]
+}
+tracks/4/type = "method"
+tracks/4/path = NodePath(".")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "flip_selected"
+} ]
+}
+
+[sub_resource type="DynamicFont" id=3]
+size = 102
+use_filter = true
+extra_spacing_top = 20
+extra_spacing_bottom = 20
+font_data = ExtResource( 8 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 160
+font_data = ExtResource( 8 )
+
+[node name="Card" type="Area2D" groups=[
+"CARD",
+]]
+script = ExtResource( 1 )
+cardFront = NodePath("Front")
+cardBack = NodePath("Back")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="Front" type="Node2D" parent="."]
+visible = false
+
+[node name="background" type="Sprite" parent="Front"]
+modulate = Color( 0, 0, 0, 1 )
+texture = ExtResource( 3 )
+
+[node name="figure" type="Sprite" parent="Front"]
+position = Vector2( 1, 0 )
+texture = ExtResource( 4 )
+
+[node name="border" type="Sprite" parent="Front"]
+texture = ExtResource( 2 )
+
+[node name="Name" type="Label" parent="Front"]
+modulate = Color( 0, 0, 0, 1 )
+margin_left = -112.0
+margin_top = 336.0
+margin_right = 120.0
+margin_bottom = 384.0
+custom_fonts/font = SubResource( 5 )
+text = "Name"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Watermark" type="Sprite" parent="."]
+texture = ExtResource( 7 )
+
+[node name="Back" type="Node2D" parent="."]
+
+[node name="background" type="Sprite" parent="Back"]
+modulate = Color( 0, 0, 0, 1 )
+texture = ExtResource( 3 )
+
+[node name="figure" type="Sprite" parent="Back"]
+position = Vector2( 1, 0 )
+texture = ExtResource( 5 )
+
+[node name="border" type="Sprite" parent="Back"]
+texture = ExtResource( 6 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/selected = SubResource( 2 )
+
+[node name="Open" type="Button" parent="."]
+visible = false
+margin_left = -96.0
+margin_top = 424.0
+margin_right = 107.0
+margin_bottom = 558.0
+custom_fonts/font = SubResource( 3 )
+text = "Open"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Close" type="Button" parent="."]
+visible = false
+modulate = Color( 0.976471, 0.0980392, 0.0313726, 1 )
+margin_left = -24.0
+margin_top = -712.0
+margin_right = 87.0
+margin_bottom = -567.0
+rect_rotation = 345.0
+custom_fonts/font = SubResource( 4 )
+text = "X"
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="input_event" from="." to="." method="_on_Card_input_event"]
+[connection signal="button_down" from="Open" to="." method="_on_Open_button_down"]
+[connection signal="button_down" from="Close" to="." method="_on_Close_button_down"]
