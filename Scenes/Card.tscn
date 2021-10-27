@@ -12,14 +12,14 @@
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 277.666, 393.739 )
 
-[sub_resource type="DynamicFont" id=5]
-size = 32
+[sub_resource type="DynamicFont" id=2]
+size = 36
+outline_size = 1
 use_filter = true
 extra_spacing_char = 2
 font_data = ExtResource( 8 )
 
-[sub_resource type="Animation" id=2]
-resource_name = "selected"
+[sub_resource type="Animation" id=3]
 length = 0.8
 tracks/0/type = "bezier"
 tracks/0/path = NodePath("Back:position:x")
@@ -80,14 +80,14 @@ tracks/4/keys = {
 } ]
 }
 
-[sub_resource type="DynamicFont" id=3]
+[sub_resource type="DynamicFont" id=4]
 size = 102
 use_filter = true
 extra_spacing_top = 20
 extra_spacing_bottom = 20
 font_data = ExtResource( 8 )
 
-[sub_resource type="DynamicFont" id=4]
+[sub_resource type="DynamicFont" id=5]
 size = 160
 font_data = ExtResource( 8 )
 
@@ -97,6 +97,7 @@ font_data = ExtResource( 8 )
 script = ExtResource( 1 )
 cardFront = NodePath("Front")
 cardBack = NodePath("Back")
+url = "http://18.117.224.193:3333/show/"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
@@ -117,14 +118,31 @@ texture = ExtResource( 2 )
 
 [node name="Name" type="Label" parent="Front"]
 modulate = Color( 0, 0, 0, 1 )
-margin_left = -112.0
-margin_top = 336.0
-margin_right = 120.0
-margin_bottom = 384.0
-custom_fonts/font = SubResource( 5 )
-text = "Name"
+margin_left = -128.0
+margin_top = 330.0
+margin_right = 128.0
+margin_bottom = 397.0
+custom_fonts/font = SubResource( 2 )
+text = "A RODA DA FORTUNA"
 align = 1
 valign = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="num" type="Label" parent="Front"]
+modulate = Color( 1, 0, 0, 1 )
+margin_left = -96.0
+margin_top = -379.0
+margin_right = -14.0
+margin_bottom = -340.0
+rect_scale = Vector2( 2, 2 )
+custom_fonts/font = SubResource( 2 )
+text = "XX"
+align = 1
+valign = 1
+autowrap = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -143,10 +161,11 @@ position = Vector2( 1, 0 )
 texture = ExtResource( 5 )
 
 [node name="border" type="Sprite" parent="Back"]
+visible = false
 texture = ExtResource( 6 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/selected = SubResource( 2 )
+anims/selected = SubResource( 3 )
 
 [node name="Open" type="Button" parent="."]
 visible = false
@@ -154,7 +173,7 @@ margin_left = -96.0
 margin_top = 424.0
 margin_right = 107.0
 margin_bottom = 558.0
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 4 )
 text = "Open"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -168,13 +187,16 @@ margin_top = -712.0
 margin_right = 87.0
 margin_bottom = -567.0
 rect_rotation = 345.0
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 5 )
 text = "X"
 flat = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+
 [connection signal="input_event" from="." to="." method="_on_Card_input_event"]
 [connection signal="button_down" from="Open" to="." method="_on_Open_button_down"]
 [connection signal="button_down" from="Close" to="." method="_on_Close_button_down"]
+[connection signal="request_completed" from="HTTPRequest" to="." method="_on_HTTPRequest_request_completed"]

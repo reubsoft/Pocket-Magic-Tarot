@@ -2,26 +2,31 @@ extends Area2D
 
 export(NodePath) var cardFront = null
 export(NodePath) var cardBack  = null
-
+export(String) var url = "http://127.0.0.1:3333/show/"
 var selected = false setget set_selected, is_selected
 var info = {} setget set_info, get_info
 var opening = false
 var locked = false
 
+var numRom = ["",'I', "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII", "XIII", "XIV", "XV",
+"XVI", "XVII", "XVIII", "XIX", "XX", "XXI", "XXII"]
+
 signal openCard(info)
 signal selectCard
 signal closeCard
+
+
 
 func _ready():
 	if cardFront == null:
 		testNode("cardFront")
 	if cardBack == null:
 		testNode("cardBack")
+		
 	info = {
-		"num" : 35,
-		"name" : "JUSTICE",
-		"content" : "Para sua alma ficar confortável e segura, muita coisa ainda precisaria acontecer. Por enquanto, o que você tem disponível é a natureza dos vínculos que estão em formação na atualidade. Não é pouca coisa."
-#		"content": "blá... blá... blá... blá... blá... blá... blá... \n blá... blá... blá... blá... blá..."
+		"num" : 0,
+		"name" : "",
+		"prevision": ""
 	}
 	
 	
@@ -46,10 +51,10 @@ func flip_selected():
 func set_selected(value):
 	selected = !value
 
-func set_info(mensage: String):
+func set_info(mensage):
 	info = mensage
 	
-func get_info() -> String:
+func get_info():
 	return info
 
 # controller visibility nodes
@@ -79,7 +84,21 @@ func _on_Open_button_down():
 	flipCard()
 	$Front/Name.text = str(info["name"])
 	
-	
-	
 func _locked(value):
 	locked = value
+
+# Url request server
+func pullCard(num):
+	print(num)
+	$HTTPRequest.request(url + str(num))
+
+func _on_HTTPRequest_request_completed(result, response_code, headers, body):
+	var json = JSON.parse(body.get_string_from_utf8())
+	var tmp = json.result.card
+
+	info.prevision = tmp.prevision
+	info.num = str(tmp.deck_id)
+	info.name = tmp['deck'].name
+	
+	$Front/num.text = numRom[int(info.num)]
+	$Front/Name.text = info.name

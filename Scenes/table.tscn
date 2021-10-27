@@ -1,27 +1,33 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Scenes/Card.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Assets/Font/MorrisRomanBlack.otf" type="DynamicFontData" id=2]
 [ext_resource path="res://Scripts/Table.gd" type="Script" id=3]
 [ext_resource path="res://Assets/backgrounds/1908076.png" type="Texture" id=4]
 
-[sub_resource type="DynamicFontData" id=2]
+[sub_resource type="DynamicFontData" id=1]
 font_path = "res://Assets/Font/MorrisRomanBlack.otf"
+
+[sub_resource type="DynamicFont" id=2]
+size = 180
+outline_size = 4
+font_data = SubResource( 1 )
 
 [sub_resource type="DynamicFont" id=3]
 size = 180
-outline_size = 4
-font_data = SubResource( 2 )
+font_data = SubResource( 1 )
 
 [sub_resource type="DynamicFont" id=4]
-size = 180
-font_data = SubResource( 2 )
-
-[sub_resource type="DynamicFont" id=1]
 size = 46
-font_data = SubResource( 2 )
+font_data = SubResource( 1 )
+
+[sub_resource type="DynamicFont" id=5]
+size = 102
+font_data = ExtResource( 2 )
 
 [node name="TableTarot" type="Node2D"]
 script = ExtResource( 3 )
+deckSize = 10
 
 [node name="background" type="Sprite" parent="."]
 position = Vector2( 967.761, 474.461 )
@@ -31,11 +37,12 @@ flip_v = true
 
 [node name="Title" type="Label" parent="."]
 modulate = Color( 0, 0, 0, 1 )
-margin_left = 179.0
-margin_top = 70.4679
-margin_right = 1741.0
-margin_bottom = 238.468
-custom_fonts/font = SubResource( 3 )
+margin_left = 544.0
+margin_top = 32.0
+margin_right = 2106.0
+margin_bottom = 200.0
+rect_scale = Vector2( 0.5, 0.5 )
+custom_fonts/font = SubResource( 2 )
 text = "Pocket Magic Tarot"
 align = 1
 valign = 1
@@ -45,11 +52,12 @@ __meta__ = {
 }
 
 [node name="Title2" type="Label" parent="."]
-margin_left = 179.0
-margin_top = 70.4679
-margin_right = 1741.0
-margin_bottom = 238.468
-custom_fonts/font = SubResource( 4 )
+margin_left = 544.0
+margin_top = 32.0
+margin_right = 2106.0
+margin_bottom = 200.0
+rect_scale = Vector2( 0.5, 0.5 )
+custom_fonts/font = SubResource( 3 )
 text = "Pocket Magic Tarot"
 align = 1
 valign = 1
@@ -79,16 +87,26 @@ position = Vector2( 1600, 483.115 )
 scale = Vector2( 0.5, 0.5 )
 
 [node name="Frase" type="Label" parent="."]
-visible = false
 margin_left = 180.0
-margin_top = 757.0
+margin_top = 768.0
 margin_right = 1742.0
 margin_bottom = 925.0
-custom_fonts/font = SubResource( 1 )
-text = "Para sua alma ficar confortável e segura, muita coisa ainda precisaria acontecer. Por enquanto, o que você tem disponível é a natureza dos vínculos que estão em formação na atualidade. Não é pouca coisa."
+custom_fonts/font = SubResource( 4 )
+text = "Escolha suas cartas e abra, para ler ela basta tocar na imagem aberta!"
 align = 1
 valign = 1
 autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Amount" type="Label" parent="."]
+margin_left = 27.9905
+margin_top = 975.402
+margin_right = 76.9905
+margin_bottom = 1063.4
+custom_fonts/font = SubResource( 5 )
+text = "3"
 __meta__ = {
 "_edit_use_anchors_": false
 }
